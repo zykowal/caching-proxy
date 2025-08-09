@@ -8,21 +8,16 @@ use hyper_util::{
 };
 use tokio::net::TcpListener;
 
-use crate::core::{
-    cache::mem_cache::{CacheEntry, MemoryCache},
-    cmd_args::config::Config,
-};
+use crate::core::cache::mem_cache::{CacheEntry, MemoryCache};
 
 pub struct ProxyServer;
 
 impl ProxyServer {
-    pub async fn start(config: Config) -> Result<(), Box<dyn Error>> {
-        let addr = SocketAddr::from(([127, 0, 0, 1], config.port));
+    pub async fn start(port: u16, origin: String) -> Result<(), Box<dyn Error>> {
+        let addr = SocketAddr::from(([127, 0, 0, 1], port));
         let listener = TcpListener::bind(addr).await?;
 
         let cache = MemoryCache::new(Duration::from_secs(60), 100);
-
-        let Config { port, origin } = config;
 
         println!("Caching proxy server started on http://127.0.0.1:{port}");
         println!("Forwarding requests to: {origin}");

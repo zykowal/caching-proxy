@@ -68,8 +68,15 @@ impl MemoryCache {
         cache.insert(key, entry);
     }
 
-    pub fn remove(&self, key: &str) {
+    pub fn clear(&self) {
         let mut cache = self.cache.write().unwrap();
-        cache.remove(key);
+        let count = cache.len();
+        cache.clear();
+        println!("Cache cleared! Removed {count} entries.");
+    }
+
+    pub fn size(&self) -> usize {
+        let cache = self.cache.read().unwrap();
+        cache.len()
     }
 }
