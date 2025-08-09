@@ -40,7 +40,7 @@ impl Config {
 }
 
 fn print_help() {
-    println!("Usage: demo[EXE] [OPTIONS] --name <NAME>");
+    println!("Usage: caching-proxy[EXE] [OPTIONS] --port <PORT> --origin <URL>");
     println!();
     println!("Options:");
     println!("  -p, --port   <PORT>    The port on which the caching proxy server will run");
