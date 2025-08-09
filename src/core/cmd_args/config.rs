@@ -7,7 +7,7 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn parse<T>(mut args: T) -> Result<Self, Box<dyn Error>>
+    pub fn parse_args<T>(mut args: T) -> Result<Self, Box<dyn Error>>
     where
         T: Iterator<Item = String>,
     {
@@ -33,6 +33,10 @@ impl Config {
                     break;
                 }
             }
+        }
+
+        if origin.is_empty() {
+            return Err("origin is required".into());
         }
 
         Ok(Self { port, origin })
